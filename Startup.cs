@@ -1,14 +1,12 @@
+using Hangfire;
+using Hangfire.Storage.SQLite;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TheLamboProject.Data;
 
 namespace TheLamboProject
@@ -18,6 +16,9 @@ namespace TheLamboProject
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Program.Configuration = Configuration;
+            Program.HangfireService = new Data.Services.HangfireService();
+            Program.CoinspotService = new Data.Services.CoinspotService();
         }
 
         public IConfiguration Configuration { get; }
@@ -28,12 +29,42 @@ namespace TheLamboProject
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            //Remove Later
             services.AddSingleton<WeatherForecastService>();
+
+            // Database Initialize
+            services.AddDbContextFactory<Data.DataBases.DataWharehouse.DataWharehouseCXT>(config => {
+                config.UseSqlite($@"Data Source={AppDomain.CurrentDomain.BaseDirectory}\Data\DataBases\DataWharehouse\DataWharehouse.db");
+            });
+
+            //Hangfire Connection
+            services.AddHangfire(config =>
+            {
+                config.UseSQLiteStorage($@"{AppDomain.CurrentDomain.BaseDirectory}\Data\DataBases\Hangfire\HangfireDatabase.db");
+
+            });
+            //services.AddHangfireServer(options =>
+            //{
+            //    options.Queues = new[] { 
+            //        Configuration.GetSection("HangfireSettings")["PriceCacheQueue"], 
+            //        "default" 
+            //    };
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseHangfireServer(new BackgroundJobServerOptions() { 
+                Queues = new[] {
+                    Configuration.GetSection("HangfireSettings")["PriceCacheQueue"],
+                    "default"
+                }
+            });
+
+            app.UseHangfireDashboard();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -55,6 +86,9 @@ namespace TheLamboProject
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
+
+            Program.HangfireService.StartCachingPrices();
+            //Program.CoinspotService.CacheCurrentPrices();
         }
     }
 }

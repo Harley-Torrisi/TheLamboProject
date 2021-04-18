@@ -1,0 +1,5 @@
+﻿# Generate Code Database
+Scaffold-DbContext "Data Source=.\\Data\DataBases\DataWharehouse\DataWharehouse.db" -Provider Microsoft.EntityFrameworkCore.Sqlite -NoOnConfiguring -Force -OutputDir Data\DataBases\DataWharehouse\Models -ContextDir Data\DataBases\DataWharehouse -Context DataWharehouseCXT -DataAnnotations
+
+# Remove Duplicate Constructor
+(Get-Content "./Data/DataBases/DataWharehouse/DataWharehouseCXT.cs" -Raw) -replace "(?ms)DataWharehouseCXT\(\).*?public ", "" | Set-Content "./Data/DataBases/DataWharehouse/DataWharehouseCXT.cs"

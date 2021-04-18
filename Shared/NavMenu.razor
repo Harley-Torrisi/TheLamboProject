@@ -1,5 +1,6 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">TheLamboProject</a>
+﻿<div class="top-row pl-4 navbar navbar-dark" style="padding: 10px !important; height: 70px">
+    <img src="/logo.png" style="height: 50px; margin: 0"/>
+    <a class="navbar-brand" href="">The Lambo Project</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -20,6 +21,11 @@
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="fetchdata">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="hangfire">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Hangfire
             </NavLink>
         </li>
     </ul>

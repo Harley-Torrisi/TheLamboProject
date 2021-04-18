@@ -1,6 +1,7 @@
 ﻿@page "/counter"
+@inject IDbContextFactory<Data.DataBases.DataWharehouse.DataWharehouseCXT> contextFactory;
 
-<h1>Counter</h1>
+<h1>Counter: @testS</h1>
 
 <p>Current count: @currentCount</p>
 
@@ -9,8 +10,19 @@
 @code {
     private int currentCount = 0;
 
+    private int testS;
+
     private void IncrementCount()
     {
         currentCount++;
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        //return base.OnInitializedAsync();
+        Data.DataBases.DataWharehouse.DataWharehouseCXT db = contextFactory.CreateDbContext();
+        testS = db.CoinspotPrices.Count();
+
+        return base.OnInitializedAsync();
     }
 }
