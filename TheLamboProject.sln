@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheLamboProject", "TheLamboProject.csproj", "{9613C684-8544-4ADE-BCF9-D4DA76DCA36D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9613C684-8544-4ADE-BCF9-D4DA76DCA36D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9613C684-8544-4ADE-BCF9-D4DA76DCA36D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9613C684-8544-4ADE-BCF9-D4DA76DCA36D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9613C684-8544-4ADE-BCF9-D4DA76DCA36D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7F9D4E8-F49F-4ACF-A23C-16B96CD5F360}
+	EndGlobalSection
+EndGlobal
